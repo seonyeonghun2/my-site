@@ -1,0 +1,21 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "@koa/bodyparser": "^5.1.1",
+    "@koa/router": "^13.1.0",
+    "knex": "^3.1.0",
+    "koa": "^2.16.1",
+    "mysql2": "^3.14.0"
+  },
+  "scripts": {
+    "start": "node src",
+    "start:dev": "nodemon src"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}

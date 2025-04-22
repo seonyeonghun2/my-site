@@ -1,0 +1,14 @@
+{
+  "name": "my-site",
+  "version": "1.0.0",
+  "description": "프런트엔드 개발자 개인사이트",
+  "main": "index.js",
+  "license": "MIT",
+  "private": true,
+  "workspaces":["client", "server"],
+  "type": "module",
+  "scripts": {
+    "client": "yarn workspace client run dev",
+  "server": "yarn workspace server run start:dev"
+  }
+}
