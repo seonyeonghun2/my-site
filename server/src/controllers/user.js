@@ -1,3 +1,4 @@
+import 'dotenv/config'
 import knex from '../config/knexfile.js'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
@@ -44,9 +45,10 @@ const userCtrl = {
         }
     },
     updateUser: async (ctx) => {
+        console.log(ctx.request.body)
         // id값 기준으로 user 존재하는지!! 확인하고,
         const existUser = await knex('users').where({id: ctx.request.body.id})
-        console.log(existUser, typeof existUser)
+        // console.log(existUser, typeof existUser)
         if(existUser.length < 1) {
             ctx.status = 401
             ctx.body = {
@@ -56,10 +58,7 @@ const userCtrl = {
         }
         
         // 새로운 정보로 업데이트! (id를 제외하고)
-        // 비밀번호를 수정하더라도, 암호 해싱처리 후에 변경
-        const hashedPassword = bcrypt.hashSync(ctx.request.body.pwd, 10)
         await knex('users').where({id: ctx.request.body.id}).update({            
-            pwd: hashedPassword,
             name: ctx.request.body.name,
             phone: ctx.request.body.phone,
             email: ctx.request.body.email
@@ -84,7 +83,7 @@ const userCtrl = {
 
         // id와 일치하는 유저를 찾고,
         const existUser = await knex('users').where({id: id})
-        console.log(existUser)
+        // console.log(existUser)
         if(existUser.length < 1) {
             ctx.status = 400
             ctx.body = {
@@ -101,16 +100,33 @@ const userCtrl = {
             ctx.body = {
                 msg: "비밀번호가 일치하지 않습니다."
             }
+            return
         }
-
+        
+        // console.log("환경변수 : ", process.env.JWT_SECRET)
         // jwt : 토큰 발급
-        jwt.sign({
-            user_id: existUser[0].id
-        },process.env.JWT_SECRET, {
+        const token = jwt.sign({
+            user_id: existUser[0].id,
+            user_name: existUser[0].name,
+            user_email: existUser[0].email,
+            user_phone: existUser[0].phone
+        }, process.env.JWT_SECRET, {
             expiresIn: '1d',            
         })
 
         // cookie를 생성 --> 응답 : 응답헤더에 기록되어 전송
+        // console.log(token);
+        ctx.cookies.set("auth_token", token, {
+            httpOnly: false,
+            maxAge: 24 * 60 * 60 * 10000,
+            secure: false,
+            path: '/'
+        })
+        console.log(ctx.response.headers)
+        ctx.status = 200
+        ctx.body = {
+            msg: "로그인 성공!"
+        }
     }
     
 }
