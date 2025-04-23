@@ -1,21 +1,16 @@
 import Koa from 'koa'
 const app = new Koa()
+import cors from '@koa/cors'
+import logger from 'koa-morgan'
 import Router from '@koa/router'
 import bodyParser from '@koa/bodyparser'
 const router = new Router()
-import config from './config/knexfile.js'
-import userRouter from './routes/index.js'
+import api from './routes/index.js'
+app.use(cors())
+app.use(logger('dev'))
 app.use(bodyParser())
 
-// router.use("/api", userRouter);
-router.post('/api/user', async (ctx) => {    
-    try {
-        await config.insert(ctx.request.body).into('users')
-    } catch (err) {
-        console.error(err)           
-    }
-
-})
+router.use("/api", api.routes());
 app.use(router.routes()).use(router.allowedMethods())
 
 
