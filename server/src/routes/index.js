@@ -1,9 +1,9 @@
 import Router from '@koa/router';
-const router = new Router();
 
-router.post('/api/user', ctx => {
-    // const {id, name, pwd, phone, email} = ctx.req.request.body
-    console.log(ctx.request)
-})
+const api = new Router();
+import userCtrl from '../controllers/user.js';
+api.post('/user', userCtrl.addUser)
+// api.put('/user/:id', userCtrl.updateUser)
+api.put('/user', userCtrl.updateUser)
 
-export default router
+export default api
