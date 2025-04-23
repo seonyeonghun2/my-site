@@ -1,6 +1,12 @@
-import React from 'react';
+import {useState} from 'react';
 import { NavLink, Link, Outlet } from 'react-router';
+import jsCookie from 'js-cookie'
 function Home() {
+  const [isSignin, setIsSignIn] = useState(false)
+  const cookie = jsCookie.get('auth_token')
+  if(cookie) {
+    setIsSignIn(prev => !prev) // true와 같은 결과
+  }
   return (
     <>
       <header>
@@ -38,18 +44,29 @@ function Home() {
                   tabIndex={0}
                   className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
                 >
-                  <li>
+                  {isSignin && <li>
                     <Link className="justify-between">
                       대시보드
                       {/* <span className="badge">New</span> */}
                     </Link>
-                  </li>
-                  <li>
+                  </li>}
+                  { isSignin ? (<>
+                    <li>
                     <Link to='/modify'>정보수정</Link>
                   </li>
                   <li>
-                    <Link>로그아웃</Link>
+                    <Link to='/signout'>로그아웃</Link>
                   </li>
+                  </>):(
+                    <>
+                    <li>
+                    <Link to='/signup'>회원가입</Link>
+                  </li>
+                  <li>
+                    <Link to='/signin'>로그인</Link>
+                  </li>
+                    </>
+                  )}
                 </ul>
               </div>
             </div>
