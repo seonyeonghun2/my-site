@@ -5,10 +5,9 @@ import {jwtDecode} from 'jwt-decode'
 function Home() {
   const [isSignin, setIsSignIn] = useState(false)
   useEffect(() => {
-    const cookie = jsCookie.get('auth_token')
-    const decode = jwtDecode(cookie)
-    console.log(decode)
-    if(cookie) {
+    const cookie = jsCookie.get('auth_token')   
+    if (cookie) {
+      const decode = jwtDecode(cookie)
       setIsSignIn(true) // true와 같은 결과
     }
   }, [])
