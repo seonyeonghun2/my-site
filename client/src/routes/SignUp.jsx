@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import axios from 'axios'
 import {Routes, Route} from 'react-router'
-function App() {
+function SignUp() {
   const [formData, setFormData] = useState({
     id: '',
     name: '',
@@ -54,4 +54,4 @@ function App() {
   );
 }
 
-export default App;
+export default SignUp;
