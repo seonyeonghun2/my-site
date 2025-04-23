@@ -6,7 +6,10 @@ import Router from '@koa/router'
 import bodyParser from '@koa/bodyparser'
 const router = new Router()
 import api from './routes/index.js'
-app.use(cors())
+app.use(cors({
+    credentials: true,
+    origin: 'http://localhost:5173'
+}))
 app.use(logger('dev'))
 app.use(bodyParser())
 
