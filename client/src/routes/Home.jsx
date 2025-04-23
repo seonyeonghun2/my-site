@@ -1,12 +1,17 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import { NavLink, Link, Outlet } from 'react-router';
 import jsCookie from 'js-cookie'
+import {jwtDecode} from 'jwt-decode'
 function Home() {
   const [isSignin, setIsSignIn] = useState(false)
-  const cookie = jsCookie.get('auth_token')
-  if(cookie) {
-    setIsSignIn(prev => !prev) // true와 같은 결과
-  }
+  useEffect(() => {
+    const cookie = jsCookie.get('auth_token')
+    const decode = jwtDecode(cookie)
+    console.log(decode)
+    if(cookie) {
+      setIsSignIn(true) // true와 같은 결과
+    }
+  }, [])
   return (
     <>
       <header>
