@@ -12,6 +12,10 @@ function Home() {
       setIsSignIn(true) // true와 같은 결과
     }
   }, [])
+    const handleLogout = () => {
+      jsCookie.remove("auth_token")
+      setIsSignIn(false) 
+    }
   return (
     <>
       <header>
@@ -60,7 +64,7 @@ function Home() {
                     <Link to='/modify'>정보수정</Link>
                   </li>
                   <li>
-                    <Link to='/signout'>로그아웃</Link>
+                    <span onClick={handleLogout}>로그아웃</span>
                   </li>
                   </>):(
                     <>
