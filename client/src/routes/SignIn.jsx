@@ -1,18 +1,22 @@
 import {useState} from 'react'
-
+import axios from 'axios'
+import { useNavigate } from 'react-router'
 function SignIn() {
+  const navigate = useNavigate()
     const [formData, setFormData] = useState({
         id: '',
-        name: '',
         pwd: '',
-        phone: '',
-        email: ''
       })
       const handleSubmit = (e) => {
         e.preventDefault()    
-        axios.post('http://localhost:4000/api/user', formData)
+        axios.post('http://localhost:4000/api/signin', formData, {
+          withCredentials: true
+        })
         .then(function (response) {
-          console.log(response);
+          if (response.status === 200 || response.statusText === 'OK') {
+            alert(`${response.data.msg}!, \n처음화면으로 이동합니다`)
+            navigate('/')
+          }
         })
         .catch(function (error) {
           console.log(error);
@@ -25,7 +29,7 @@ function SignIn() {
         })
       }
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} autoComplete='off'>
       <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4 min-w-7xl mx-auto">
         <legend className="fieldset-legend">Sign In</legend>
 
