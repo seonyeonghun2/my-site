@@ -1,5 +1,5 @@
-import knex from 'knex'
-const conn = knex({
+import Knex from 'knex'
+const knex = Knex({
     client: 'mysql2',
     connection: {
       host: '127.0.0.1',
@@ -11,4 +11,4 @@ const conn = knex({
     debug: true
   });
  
-  export default conn
+  export default knex
