@@ -2,6 +2,9 @@ import {useState, useEffect} from 'react';
 import { NavLink, Link, Outlet } from 'react-router';
 import jsCookie from 'js-cookie'
 import {jwtDecode} from 'jwt-decode'
+import About from '../components/About'
+import LatestBlog from '../components/LatestBlog'
+import LatestWorks from '../components/LatestWorks'
 function Home() {
   const [isSignin, setIsSignIn] = useState(false)
   useEffect(() => {
@@ -55,7 +58,7 @@ function Home() {
                   {isSignin && <li>
                     <Link className="justify-between">
                       대시보드
-                      {/* <span className="badge">New</span> */}
+                      <span className="badge">준비중</span>
                     </Link>
                   </li>}
                   { isSignin ? (<>
@@ -82,9 +85,15 @@ function Home() {
         </div>
       </header>
       <div className="w-7xl mx-auto my-5">
-        <div>Home</div>
-        <Outlet />
+        <About />
       </div>
+      <div className="bg-blue-100">
+        <LatestBlog />
+      </div>
+      <div className="w-7xl mx-auto my-5">
+        <LatestWorks />
+      </div>
+        <Outlet />
       <footer className="sm:footer-horizontal bg-neutral text-neutral-content items-center p-4">
         <div className='flex w-7xl mx-auto justify-between'>
           <aside className="grid-flow-col items-center flex">
