@@ -3,6 +3,7 @@ import {Routes, Route} from 'react-router'
 import Home from './routes/Home'
 import Works from './routes/Works'
 import Blog from './routes/Blog'
+import ViewPost from './routes/ViewPost'
 import Contact from './routes/Contact'
 import Modify from './routes/Modify'
 import SignIn from './routes/SignIn'
@@ -18,6 +19,7 @@ function App() {
         <Route path='/modify' element={<Modify />} />
         <Route path='/signin' element={<SignIn />} />
         <Route path='/signup' element={<SignUp />} />
+        <Route path='/blog/post/:postId' element={<ViewPost />} />
     </Routes>
   )
 }
