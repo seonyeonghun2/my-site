@@ -2,22 +2,26 @@ import knex from '../config/knexfile.js';
 import jwt from 'jsonwebtoken'
 import 'dotenv/config'
 const blogCtrl = {
-    create: async (ctx) => {
-        const authHeader = ctx.request.headers.authorization.split(' ')[1]
-        if (!authHeader || !ctx.request.headers.authorization.startsWith('Bearer ')) {
-            ctx.status = 401; // Not Authorization
-            ctx.body = {
-                msg: '유효하지 않는 토큰입니다.'
-            }
-        }
-        const decoded = jwt.verify(authHeader, process.env.JWT_SECRET)
-        const author = decoded.user_id
-        const {title, content} = ctx.request.body
+    create: async (ctx) => {        
+        // const authHeader = ctx.request.headers.authorization.split(' ')[1]
+        // if (!authHeader || !ctx.request.headers.authorization.startsWith('Bearer ')) {
+        //     ctx.status = 401; // Not Authorization
+        //     ctx.body = {
+        //         msg: '유효하지 않는 토큰입니다.'
+        //     }
+        // }
+        // const decoded = jwt.verify(authHeader, process.env.JWT_SECRET)
+        // const author = decoded.user_id
+        // const {user} = ctx.state
+        console.log("====== blogCtrl : user 정보=====")
+        const {id, name} = ctx.state.user
+        const {title, content, categories} = ctx.request.body
         try {
             await knex('posts').insert({
-               wr_id : author,
+               wr_id : id,
                title: title,
-               content: content 
+               content: content,
+               categories: categories
             }).then(() => {
               ctx.status = 200
               ctx.body = {
@@ -44,7 +48,7 @@ const blogCtrl = {
     },
     read: async (ctx) => {
         try {
-            const posts = await knex('posts')
+            const posts = await knex('posts').orderBy("id", "desc")
             ctx.status = 200
             ctx.body = {
                 msg: '데이터를 조회 성공!',

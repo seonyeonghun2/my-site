@@ -5,6 +5,7 @@ import logger from 'koa-morgan'
 import Router from '@koa/router'
 import bodyParser from '@koa/bodyparser'
 const router = new Router()
+import authMiddleware from './middleware/authMiddleware.js'
 import api from './routes/index.js'
 import blog from './routes/blog.js'
 import works from './routes/works.js'
@@ -14,7 +15,9 @@ app.use(cors({
 }))
 app.use(logger('dev'))
 app.use(bodyParser())
+app.use(authMiddleware)
 
+// api, blog, works 라우트 미들웨어보다 앞서서 authMiddleware 사용 (=미들웨어 장착)
 router.use("/api", api.routes());
 router.use("/blog", blog.routes());
 router.use("/works", works.routes());
