@@ -1,12 +1,18 @@
 import {useEffect, useState} from 'react'
 import axios from 'axios'
+import { useNavigate } from 'react-router'
+
 function Blog() {
+  const navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(true)
   const [posts, setPosts] = useState([])
   useEffect(() => {
     const getBlogPosts = () => {
       axios.get("http://localhost:4000/blog/read").then((response) => {
+        // 오름차순
         setPosts(response.data.data)
+        // 내림차순
+        // setPosts(response.data.data.sort((a,b) => b - a))
         setIsLoading(false)
       }).catch((err) => {
         console.log(err)
@@ -26,8 +32,14 @@ function Blog() {
       day: '2-digit'
     }).split(".")
   }
+  const handleClick = () => {
+    navigate('/blog/write')
+  }
   return (
-    <div>
+    <div className="w-7xl mx-auto my-5">
+      <div className="featured-title text-3xl font-bold my-3 flex justify-between">
+        Blog <button className="btn btn-outline btn-primary" onClick={handleClick}>Write</button>
+      </div>
       {
         posts.map(post => (
           <div key={post.id} className='my-5'>
@@ -45,6 +57,35 @@ function Blog() {
           </div>
         ))
       }
+      <div className="flex justify-center">
+        <div className="join">
+          <input
+            className="join-item btn btn-square"
+            type="radio"
+            name="options"
+            aria-label="1"
+            checked="checked"
+          />
+          <input
+            className="join-item btn btn-square"
+            type="radio"
+            name="options"
+            aria-label="2"
+          />
+          <input
+            className="join-item btn btn-square"
+            type="radio"
+            name="options"
+            aria-label="3"
+          />
+          <input
+            className="join-item btn btn-square"
+            type="radio"
+            name="options"
+            aria-label="4"
+          />
+        </div>
+      </div>
     </div>
   )
 }
