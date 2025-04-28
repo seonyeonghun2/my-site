@@ -8,6 +8,10 @@ function LatestWorkItem({ lists, listType }) {
   const handleClick = () => {
     navigate('/works/write')
   }
+  function stringToDate(dateString){
+    const date = new Date(dateString).toLocaleDateString().split('.').join('/').replaceAll(" ", "").substring(0, 9)
+    return date
+  }
   return (
     <>
       <div className="featured-title text-3xl font-bold my-3 flex justify-between">
@@ -20,14 +24,14 @@ function LatestWorkItem({ lists, listType }) {
               <div className="featured-work flex gap-5">
                 <div className="work-image">
                   <img
-                    src="https://img.daisyui.com/images/stock/photo-1635805737707-575885ab0820.webp"
+                    src={`http://localhost:4000/${list.file_name}`}
                     className="max-w-sm rounded-lg shadow-2xl"
                   />
                 </div>
                 <div className="work-desc">
                   <h2 className="desc-title text-3xl mb-3">{list.title}</h2>
                   <div className="badge badge-primary mr-2">
-                    {list.created_at}
+                    {stringToDate(list.created_at)}
                   </div>
                   <span className="badge badge-accent mr-2">{list.is_active ? "Done":"In process"}</span>
                   {/* <span className="text-gray-400">dashboard</span> */}
