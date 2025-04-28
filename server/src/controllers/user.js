@@ -118,7 +118,7 @@ const userCtrl = {
         // console.log(token);
         ctx.cookies.set("auth_token", token, {
             httpOnly: false,
-            maxAge: 24 * 60 * 60 * 10000,
+            maxAge: 24 * 60 * 60 * 1000,
             secure: false,
             path: '/'
         })
