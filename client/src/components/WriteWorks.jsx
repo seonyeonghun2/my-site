@@ -18,25 +18,34 @@ function WriteWorks() {
   const handleFileChnage = (e) => {
     setFormData((prev) => ({
       ...prev,
-      ["files"]: e.target.value
+      files: [...prev.files, ...e.target.files]
     }))
   }
   const token = jsCookies.get('auth_token')
   const handleSubmit = async (e) => {
     e.preventDefault()
-    await axios.post("http://localhost:4000/works/add", formData, {
+    const uploadData = new FormData()
+    uploadData.append("title", formData.title)
+    uploadData.append("description", formData.description)
+    uploadData.append("is_active", formData.is_active)
+    formData.files.forEach((file) => {
+      uploadData.append("files", file)
+    })
+    // for (var pair of uploadData.entries()) {
+    //   console.log(pair[0] + ", " + pair[1]);
+    // }
+    await axios.post("http://localhost:4000/works/add", uploadData, {
       headers: {
         'Content-Type': 'multipart/form-data',
         'Authorization': `Bearer ${token}`
       },
       withCredentials: true
-    })
-    
+    }).then((response) => console.log(response)).catch((err) => console.error(err))
   }
   return (
     <div className="w-7xl mx-auto my-5">
       <h2>WriteWorks</h2>
-      <form autoComplete="off" onSubmit={handleSubmit}>
+      <form autoComplete="off" onSubmit={handleSubmit} encType='multipart/form-data'>
         <fieldset className="fieldset bg-base-200 border-base-300 rounded-box border p-4 w-6xl min-w-96">
           <legend className="fieldset-legend">Works details</legend>
 
