@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react'
 import axios from 'axios'
-import { useNavigate } from 'react-router'
+import { useNavigate, Link } from 'react-router'
 
 function Blog() {
   const navigate = useNavigate()
@@ -42,18 +42,22 @@ function Blog() {
       </div>
       {
         posts.map(post => (
-          <div key={post.id} className='my-5'>
-            <h1 className='text-3xl font-extrabold'>{post.title}</h1>
-            <p className='text-2xl my-2'>
-              <span>{stringToDate(post.wr_date)}</span>
-              <span> &#47; </span>
-              <em className='mr-3 text-gray-400'>{post.categories}</em>
-              {/* <span>{post.categories.map(cate => (
-                <em className='mr-3 text-gray-400'>{cate}</em>
-              ))}</span> */}
-            </p>
-            <p>{post.content}</p>
-            <hr className='my-5 border-gray-300'/>
+          <div key={post.id} className='my-5'>            
+            <>
+              <Link to={`/blog/post/${post.id}`}>
+                <h1 className='text-3xl font-extrabold'>{post.title}</h1>
+                <p className='text-2xl my-2'>
+                  <span>{stringToDate(post.wr_date)}</span>
+                  <span> &#47; </span>
+                  <em className='mr-3 text-gray-400'>{post.categories}</em>
+                  {/* <span>{post.categories.map(cate => (
+                    <em className='mr-3 text-gray-400'>{cate}</em>
+                  ))}</span> */}
+                </p>
+                <p>{post.content}</p>
+              </Link>
+              <hr className='my-5 border-gray-300'/>
+            </>
           </div>
         ))
       }
@@ -64,7 +68,7 @@ function Blog() {
             type="radio"
             name="options"
             aria-label="1"
-            checked="checked"
+            checked="checked" readOnly
           />
           <input
             className="join-item btn btn-square"
