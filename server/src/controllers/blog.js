@@ -48,7 +48,7 @@ const blogCtrl = {
     },
     read: async (ctx) => {
         try {
-            const posts = await knex('posts').orderBy("id", "desc")
+            const posts = await knex('posts').orderBy("id", "desc").limit(2)
             ctx.status = 200
             ctx.body = {
                 msg: '데이터를 조회 성공!',
@@ -62,6 +62,7 @@ const blogCtrl = {
         }
     },
     singlePost: async (ctx) => {
+        console.log(ctx.params);
         const post = await knex('posts').where({id: ctx.params.postId}).first()
         if (!post) {
             ctx.status = 500
