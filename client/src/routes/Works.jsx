@@ -11,7 +11,7 @@ function Works() {
             type="radio"
             name="options"
             aria-label="1"
-            checked="checked"
+            checked="checked" readOnly
           />
           <input
             className="join-item btn btn-square"
