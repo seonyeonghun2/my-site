@@ -22,13 +22,13 @@ function App() {
             <Route path='works/write' element={<WriteWorks />} />
             <Route path='blog' element={<Blog />} />
             <Route path='blog/write' element={<WriteBlog />} />
+            <Route path='/blog/post/:postId' element={<ViewPost />} />
             <Route path='contact' element={<Contact />} />
             <Route path='contact/write' element={<WriteContact />} />
         </Route>
         <Route path='/modify' element={<Modify />} />
         <Route path='/signin' element={<SignIn />} />
         <Route path='/signup' element={<SignUp />} />
-        <Route path='/blog/post/:postId' element={<ViewPost />} />
     </Routes>
   )
 }
