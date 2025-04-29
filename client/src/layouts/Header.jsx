@@ -20,7 +20,7 @@ function Header({handleLogout, isSignin}) {
                     <NavLink to="/blog">blog</NavLink>
                   </li>
                   <li>
-                    <NavLink to="/contact">contact</NavLink>
+                    <NavLink to="/contacts">contact</NavLink>
                   </li>
                 </ul>
               </nav>
