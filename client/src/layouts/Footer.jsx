@@ -1,5 +1,5 @@
 import React from 'react'
-
+import ChatModal from '../components/ChatModal'
 function Footer() {
   return (
     <footer className="sm:footer-horizontal bg-neutral text-neutral-content items-center p-4">
@@ -36,6 +36,9 @@ function Footer() {
             </a>
           </nav>
         </div>
+        
+          {/*<ChatModal />*/}
+          
       </footer>
   )
 }
