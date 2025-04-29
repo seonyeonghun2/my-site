@@ -1,27 +1,53 @@
-import React from 'react';
-
+import { useState } from 'react';
+import jsCookies from 'js-cookie'
+import {jwtDecode} from 'jwt-decode'
+import axios from 'axios'
 function WriteContact() {
+  const [formData, setFormData] = useState({
+    title: '',
+    content: '',
+    categories: ''
+  })
+  const token = jsCookies.get('auth_token')  
+  const handleChangeInput = (e) => {
+    const {name, value} = e.target
+    setFormData(prevdata => ({
+      ...prevdata,
+      [name]: value
+    }))
+  }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await axios.post("http://localhost:4000/contacts/create", formData, {
+      headers: {
+        "Authorization": `Bearer ${token}`
+      },
+      withCredentials: true
+    }).then((response) => {
+      if (response.status === 200 || response.statusText === 'OK') {
+        alert("등록 성공!\n목록으로 이동합니다")
+        window.location.href = '/contact'
+      }
+    }).catch((err) => console.error(err))      
+  }
   return (
     <div className="w-7xl mx-auto my-5">
-      <h2>Write Contact</h2>
-      <form autoComplete="off">
-        <fieldset className="fieldset bg-base-200 border-base-300 rounded-box border p-4 w-6xl min-w-96">
-          <legend className="fieldset-legend">Contact details</legend>
+      <h2>WriteContact</h2>
+      <form autoComplete="off" onSubmit={handleSubmit}>
+        <fieldset className="fieldset bg-base-200 border-base-300 rounded-box border p-4 w-6xl min-w-96 flex flex-col">
+          <legend className="fieldset-legend">Contact Details</legend>
 
           <label className="label">제목</label>
-          <input type="text" className="input" placeholder="My awesome page" />
+          <input type="text" className="input flex md:w-3xl lg:w-5xl" name="title" onChange={handleChangeInput} placeholder="My awesome page" />
 
           <label className="label">내용</label>
-          <input type="text" className="input" placeholder="my-awesome-page" />
+          {/* <input type="text" className="input" name="content" onChange={handleChangeInput} placeholder="my-awesome-page" /> */}
+          <textarea  name="content" className="textarea textarea-md flex md:w-3xl lg:w-5xl" onChange={handleChangeInput} rows={20} cols={30} placeholder="my-awesome-page"></textarea>
 
-          <label className="label">완료여부</label>
-          <input type="text" className="input" placeholder="Name" />
-          <label className="label">첨부파일</label>
-          <input type="file" className="file-input file-input-primary" />
-          <input type="file" className="file-input file-input-secondary" />
-          <input type="file" className="file-input file-input-accent" />
-
-          <button className="btn btn-neutral mt-4">등록</button>
+          <label className="label">구분</label>
+          <input type="text" className="input flex md:w-3xl lg:w-5xl" name="categories" onChange={handleChangeInput} placeholder="해시태그" />
+          {/* select 태그 , 선택지를 좁혀서 ex>문의, 요청, 제작의뢰... */}
+          <button type="submit" className="btn btn-neutral mt-4">등록</button>
         </fieldset>
       </form>
     </div>
