@@ -9,7 +9,7 @@ const knex = Knex({
       password: process.env.DB_PWD,
       database: process.env.DB_NAME,
     },
-    debug: true
+    debug: false
   });
  
   export default knex
