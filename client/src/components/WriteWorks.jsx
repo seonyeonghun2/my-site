@@ -50,17 +50,19 @@ function WriteWorks() {
           <legend className="fieldset-legend">Works details</legend>
 
           <label className="label">제목</label>
-          <input type="text" className="input" name="title" onChange={handleInputChange} placeholder="My awesome page" />
+          <input type="text" className="input flex md:w-3xl lg:w-5xl" name="title" onChange={handleInputChange} placeholder="My awesome page" />
 
           <label className="label">내용</label>
-          <input type="text" className="input" name="description" onChange={handleInputChange} placeholder="my-awesome-page" />
+          <input type="text" className="input flex md:w-3xl lg:w-5xl" name="description" onChange={handleInputChange} placeholder="my-awesome-page" />
 
           <label className="label">완료여부</label>
-          <input type="text" className="input" name="is_active" onChange={handleInputChange} placeholder="Name" />
+          <input type="text" className="input flex md:w-3xl lg:w-5xl" name="is_active" onChange={handleInputChange} placeholder="Name" />
           <label className="label">첨부파일</label>
-          <input type="file" className="file-input file-input-primary" onChange={handleFileChnage} name="files" />
-          <input type="file" className="file-input file-input-secondary" onChange={handleFileChnage} name="files" />
-          <input type="file" className="file-input file-input-accent" onChange={handleFileChnage} name="files" />
+          <div className="flex md:w-3xl lg:w-5xl gap-5 justify-between">
+            <input type="file" className="file-input file-input-primary" onChange={handleFileChnage} name="files" />
+            <input type="file" className="file-input file-input-secondary" onChange={handleFileChnage} name="files" />
+            <input type="file" className="file-input file-input-accent" onChange={handleFileChnage} name="files" />
+          </div>
 
           <button type="submit" className="btn btn-neutral mt-4">등록</button>
         </fieldset>
