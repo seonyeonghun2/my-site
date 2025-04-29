@@ -63,7 +63,7 @@ const worksCtrl = {
     },
     readWorks: async (ctx) => {        
         const lists = await knex.from('works').innerJoin('files', 'works.work_id', 'files.work_id').limit(3).orderBy("created_at", "desc");
-        console.log(lists)
+        // console.log(lists)
         ctx.status = 200
         ctx.body = {
             msg: 'work list를 리턴합니다.',

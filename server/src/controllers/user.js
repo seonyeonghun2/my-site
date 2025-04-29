@@ -122,7 +122,7 @@ const userCtrl = {
             secure: false,
             path: '/'
         })
-        console.log(ctx.response.headers)
+        // console.log(ctx.response.headers)
         ctx.status = 200
         ctx.body = {
             msg: "로그인 성공!"
