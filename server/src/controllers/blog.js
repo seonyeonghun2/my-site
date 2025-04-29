@@ -3,17 +3,6 @@ import jwt from 'jsonwebtoken'
 import 'dotenv/config'
 const blogCtrl = {
     create: async (ctx) => {        
-        // const authHeader = ctx.request.headers.authorization.split(' ')[1]
-        // if (!authHeader || !ctx.request.headers.authorization.startsWith('Bearer ')) {
-        //     ctx.status = 401; // Not Authorization
-        //     ctx.body = {
-        //         msg: '유효하지 않는 토큰입니다.'
-        //     }
-        // }
-        // const decoded = jwt.verify(authHeader, process.env.JWT_SECRET)
-        // const author = decoded.user_id
-        // const {user} = ctx.state
-        console.log("====== blogCtrl : user 정보=====")
         const {id, name} = ctx.state.user
         const {title, content, categories} = ctx.request.body
         try {
@@ -41,11 +30,7 @@ const blogCtrl = {
         // 요청바디를 해석해서 posts 테이블에 .insert()
         // 글 등록후에 특정 경로로 리다이렉트 or 메세지 전송
     },
-    delete: async (ctx) => {
-        // 요청바디에서 값의 누락이 없는지 검사!
-        // 요청바디를 해석해서 posts 테이블에 .insert()
-        // 글 등록후에 특정 경로로 리다이렉트 or 메세지 전송
-    },
+    
     read: async (ctx) => {
         try {
             const posts = await knex('posts').orderBy("id", "desc").limit(2)
@@ -72,6 +57,24 @@ const blogCtrl = {
         }        
         ctx.status = 201
         ctx.body = post
+    },
+    delete: async (ctx) => {
+        const { postId } = ctx.params
+        try {
+            const result = await knex('posts').where("id", postId).delete();
+            console.log(result)
+            ctx.status = 200
+            ctx.body = {
+                msg: "포스트 삭제",
+                data: true
+            }
+        } catch (err) {
+            console.error(err)
+            ctx.status = 500
+            ctx.body = {
+                msg: "포스트 삭제 실패"
+            }
+        }
     }
 }
 
