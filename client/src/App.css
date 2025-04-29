@@ -2,3 +2,7 @@
     color: salmon !important;
     font-weight: bold
 }
+
+.chat {
+    right: 0;
+}
