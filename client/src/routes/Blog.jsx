@@ -40,6 +40,7 @@ function Blog() {
       <div className="featured-title text-3xl font-bold my-3 flex justify-between">
         Blog <button className="btn btn-outline btn-primary" onClick={handleClick}>Write</button>
       </div>
+      { !posts.length && <div>포스가 없습니다</div>}
       {
         posts.map(post => (
           <div key={post.id} className='my-5'>            

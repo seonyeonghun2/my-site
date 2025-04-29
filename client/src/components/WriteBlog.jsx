@@ -34,17 +34,18 @@ function WriteBlog() {
     <div className="w-7xl mx-auto my-5">
       <h2>WriteBlog</h2>
       <form autoComplete="off" onSubmit={handleSubmit}>
-        <fieldset className="fieldset bg-base-200 border-base-300 rounded-box border p-4 w-6xl min-w-96">
+        <fieldset className="fieldset bg-base-200 border-base-300 rounded-box border p-4 w-6xl min-w-96 flex flex-col">
           <legend className="fieldset-legend">Blog details</legend>
 
           <label className="label">제목</label>
-          <input type="text" className="input" name="title" onChange={handleChangeInput} placeholder="My awesome page" />
+          <input type="text" className="input flex md:w-3xl lg:w-5xl" name="title" onChange={handleChangeInput} placeholder="My awesome page" />
 
           <label className="label">내용</label>
-          <input type="text" className="input" name="content" onChange={handleChangeInput} placeholder="my-awesome-page" />
+          {/* <input type="text" className="input" name="content" onChange={handleChangeInput} placeholder="my-awesome-page" /> */}
+          <textarea  name="content" className="textarea textarea-md flex md:w-3xl lg:w-5xl" onChange={handleChangeInput} rows={20} cols={30} placeholder="my-awesome-page"></textarea>
 
           <label className="label">구분</label>
-          <input type="text" className="input" name="categories" onChange={handleChangeInput} placeholder="해시태그" />
+          <input type="text" className="input flex md:w-3xl lg:w-5xl" name="categories" onChange={handleChangeInput} placeholder="해시태그" />
 
           <button type="submit" className="btn btn-neutral mt-4">등록</button>
         </fieldset>
